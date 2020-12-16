@@ -1100,7 +1100,38 @@ kscrollup(const Arg* a)
 		tfulldirt();
 	}
 }
+void
+kscrolldownfast(const Arg* a)
+{
+	int n = a->i;
 
+	if (n < 0)
+		n = term.row + n;
+
+	if (n > term.scr)
+		n = term.scr;
+
+	if (term.scr > 0) {
+		term.scr -= 2*n;
+		selscroll(0, -n);
+		tfulldirt();
+	}
+}
+
+void
+kscrollupfast(const Arg* a)
+{
+	int n = a->i;
+
+	if (n < 0)
+		n = term.row + n;
+
+	if (term.scr <= HISTSIZE-n) {
+		term.scr += 2*n;
+		selscroll(0, n);
+		tfulldirt();
+	}
+}
 void
 tscrolldown(int orig, int n, int copyhist)
 {
