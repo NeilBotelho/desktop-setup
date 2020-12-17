@@ -79,7 +79,6 @@ typedef union {
 
 void die(const char *, ...);
 void redraw(void);
-void tfulldirt(void);
 void draw(void);
 
 void kscrolldownfast(const Arg *);
@@ -129,4 +128,3 @@ extern char *termname;
 extern unsigned int tabspaces;
 extern unsigned int defaultfg;
 extern unsigned int defaultbg;
-extern float alpha, alphaUnfocused;
