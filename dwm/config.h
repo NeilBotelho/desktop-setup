@@ -11,7 +11,7 @@ static const int swallowfloating    = 0;        /* 1 means swallow floating wind
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=12", "font-awesome:10"  };
+static const char *fonts[]          = { "monospace:size=13", "font-awesome:10"  };
 //static const char *fonts[]          = { "noto-emoji:size=12","monospace:size=10"  };
 // static char dmenufont[]             = "monospace:size=10";
 static char normbgcolor[]           = "#222222";
@@ -50,9 +50,9 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	*/
 	/* class     instance      	title       	 tags mask    isfloating   isterminal  noswallow  monitor */
-	{ "Gimp",      NULL,       	NULL,       	    1 << 6,       0,           0,         0,        -1 },
+//	{ "Gimp",      NULL,       	NULL,       	    1 << 6,       0,           0,         0,        -1 },
     { "Hexchat",   NULL,        NULL,               1 << 7,       0,           0,         0,        -1 }, 
-	{ "scratchpad",      "scratchpad",  NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
+	{ "KeePassXC", NULL,        NULL,       	    1 << 7,       0,           0,         0,        -1 },
 	// { "thunderbird",  NULL,       NULL,         1 << 7,       0,           -1 },
 };
 
@@ -101,7 +101,8 @@ static const Layout layouts[] = {
 /* commands */
 // static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 // static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
+static const char *tmuxcmd[]  = { "alacritty","-e","tmux", NULL };
 
 #include <X11/XF86keysym.h>
 #include "shiftview.c"
@@ -123,8 +124,8 @@ static Key keys[] = {
 	TAGKEYS(			XK_e,			4)
 	TAGKEYS(			XK_c,			7)
 	{ MODKEY,			XK_0,		view,		{.ui = ~0 } },
-	{ MODKEY|ShiftMask,		XK_0,		tag,		{.ui = ~0 } },
 	{ MODKEY,			XK_Tab,		view,		{0} },
+	{ MODKEY|ShiftMask,		XK_0,		tag,		{.ui = ~0 } },
 
 
 	{ MODKEY,				XK_t,		setlayout,	{.v = &layouts[0]} }, /* tile */
@@ -172,6 +173,7 @@ static Key keys[] = {
 
 	// Launch ST:
 	{ MODKEY,			XK_Return,	spawn,		{.v = termcmd } },
+	{ MODKEY|ShiftMask,		XK_Return,	spawn,		{.v = tmuxcmd } },
 
 
 	// { MODKEY,				XK_PageUp,	shiftview,	{ .i = -1 } },
@@ -209,7 +211,6 @@ static Button buttons[] = {
 	{ ClkStatusText,        0,              Button4,        sigdwmblocks,   {.i = 4} },
 	{ ClkStatusText,        0,              Button5,        sigdwmblocks,   {.i = 5} },
 	{ ClkStatusText,        ShiftMask,      Button1,        sigdwmblocks,   {.i = 6} },
-	{ ClkStatusText,        ShiftMask,      Button3,        spawn,          SHCMD("st -e vim ~/.local/src/dwmblocks/config.h") },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        defaultgaps,	{0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
